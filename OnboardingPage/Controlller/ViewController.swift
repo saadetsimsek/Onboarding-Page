@@ -22,6 +22,8 @@ class ViewController: UIViewController {
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         return pageControl
     }()
+    
+    private var slides = [OnboardingView]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +39,20 @@ class ViewController: UIViewController {
     
     private func setDelegates(){
         
+    }
+    
+    private func createSlider() -> [OnboardingView]{
+        
+        let firstOnboardingView = OnboardingView()
+        firstOnboardingView.setPageLabelText(text: "one kfdjdhfgbfghddgff fjdhgdhghdf hfghgyrytgh shftfgfhgdjhfu hgdhfg")
+        
+        let secondOnboardingView = OnboardingView()
+        secondOnboardingView.setPageLabelText(text: "two jdbfhbdh hfgrryfg urtgrghdbh hfvhrgrd frrgtfrghyfg jhrhrfg hderfrsgfhyeghs")
+        
+        let thirdOnboardingView = OnboardingView()
+        thirdOnboardingView.setPageLabelText(text: "three jdhbc ahgferegf rhsgfse hrfhrsgf rhgfrhg hrefghfghre hfrghreg hfghregy hegtagfa")
+        
+        return [firstOnboardingView, secondOnboardingView, thirdOnboardingView]
     }
     
     private func setConstraints(){

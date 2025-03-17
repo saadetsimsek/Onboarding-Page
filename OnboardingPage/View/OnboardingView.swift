@@ -9,7 +9,7 @@ import UIKit
 
 class OnboardingView: UIView {
     
-    let pageLabel: UILabel = {
+    private let pageLabel: UILabel = {
         let labell = UILabel()
         labell.textColor = .white
         labell.font = UIFont.systemFont(ofSize: 14, weight: .bold)
@@ -28,6 +28,10 @@ class OnboardingView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    public func setPageLabelText(text: String){
+        pageLabel.text = text
     }
     
     private func setConstraints(){

@@ -11,6 +11,7 @@ class ViewController: UIViewController {
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
+        scrollView.isPagingEnabled = true
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
@@ -35,6 +36,9 @@ class ViewController: UIViewController {
         view.backgroundColor = .systemGray
         view.addSubview(scrollView)
         view.addSubview(pageControl)
+        
+        slides = createSlider()
+        setupSlidesScrollView(slides: slides)
     }
     
     private func setDelegates(){
@@ -53,6 +57,18 @@ class ViewController: UIViewController {
         thirdOnboardingView.setPageLabelText(text: "three jdhbc ahgferegf rhsgfse hrfhrsgf rhgfrhg hrefghfghre hfrghreg hfghregy hegtagfa")
         
         return [firstOnboardingView, secondOnboardingView, thirdOnboardingView]
+    }
+    
+    private func setupSlidesScrollView(slides: [OnboardingView]){
+        scrollView.contentSize = CGSize(width: view.frame.width * CGFloat(slides.count),
+                                        height: view.frame.height)
+        for i in 0..<slides.count {
+            slides[i].frame = CGRect(x: view.frame.width * CGFloat(i),
+                                     y: 0,
+                                     width: view.frame.width,
+                                     height: view.frame.height)
+            scrollView.addSubview(slides[i])
+        }
     }
     
     private func setConstraints(){

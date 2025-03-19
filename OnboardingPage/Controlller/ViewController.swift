@@ -12,6 +12,7 @@ class ViewController: UIViewController {
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.isPagingEnabled = true
+        scrollView.bounces = false // sayfa sonuna gittiğinde kaydırma kaL
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
@@ -30,6 +31,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         setConstraints()
+        setDelegates()
     }
     
     private func setupViews(){
@@ -42,7 +44,7 @@ class ViewController: UIViewController {
     }
     
     private func setDelegates(){
-        
+        scrollView.delegate = self
     }
     
     private func createSlider() -> [OnboardingView]{
@@ -88,3 +90,32 @@ class ViewController: UIViewController {
 
 }
 
+//MARK: - ScrollViewDelegate
+
+extension ViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let pageIndex = round(scrollView.contentOffset.x / view.frame.width)
+        pageControl.currentPage = Int(pageIndex)
+        
+        let maxHorizontalOffset = scrollView.contentSize.width - view.frame.width
+        let percentHorizontalOffset = scrollView.contentOffset.x / maxHorizontalOffset
+        
+        if percentHorizontalOffset <= 0.5 {
+            let firstTransform = CGAffineTransform(scaleX: (0.5 - percentHorizontalOffset) / 0.5,
+                                                   y: (0.5 - percentHorizontalOffset) / 0.5)
+            let secondTransform = CGAffineTransform(scaleX: percentHorizontalOffset / 0.5,
+                                                    y: percentHorizontalOffset / 0.5)
+            slides[0].setPageLabelTransform(transform: firstTransform)
+            slides[1].setPageLabelTransform(transform: secondTransform)
+        }
+        else {
+            let secondTransform = CGAffineTransform(scaleX: (1 - percentHorizontalOffset) / 0.5,
+                                                    y: (1 - percentHorizontalOffset) / 0.5)
+            let thirdTransform = CGAffineTransform(scaleX: percentHorizontalOffset,
+                                                   y: percentHorizontalOffset)
+            slides[1].setPageLabelTransform(transform: secondTransform)
+            slides[2].setPageLabelTransform(transform: thirdTransform)
+        }
+    }
+}

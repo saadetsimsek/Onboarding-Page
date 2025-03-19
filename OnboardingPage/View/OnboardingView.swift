@@ -34,6 +34,10 @@ class OnboardingView: UIView {
         pageLabel.text = text
     }
     
+    public func setPageLabelTransform(transform: CGAffineTransform){
+        pageLabel.transform = transform
+    }
+    
     private func setConstraints(){
         NSLayoutConstraint.activate([
             pageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),

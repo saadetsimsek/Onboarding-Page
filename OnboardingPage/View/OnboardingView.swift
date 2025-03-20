@@ -38,6 +38,10 @@ class OnboardingView: UIView {
         pageLabel.transform = transform
     }
     
+    public func setPageLabelTextColor(color: UIColor){
+        pageLabel.textColor = color
+    }
+    
     private func setConstraints(){
         NSLayoutConstraint.activate([
             pageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),

@@ -25,8 +25,16 @@ class ViewController: UIViewController {
         return pageControl
     }()
     
+    private let backImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "background")
+        imageView.contentMode = .scaleAspectFill
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     private var slides = [OnboardingView]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -34,13 +42,20 @@ class ViewController: UIViewController {
         setDelegates()
     }
     
-    private func setupViews(){
-        view.backgroundColor = .systemGray
-        view.addSubview(scrollView)
-        view.addSubview(pageControl)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         slides = createSlider()
         setupSlidesScrollView(slides: slides)
+        slides[2].setPageLabelTextColor(color: .black)
+    }
+    
+    private func setupViews(){
+        view.backgroundColor = .systemGray
+        view.addSubview(scrollView)
+        scrollView.addSubview(backImageView)
+        view.addSubview(pageControl)
+      
     }
     
     private func setDelegates(){
@@ -79,6 +94,11 @@ class ViewController: UIViewController {
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            backImageView.topAnchor.constraint(equalTo: view.topAnchor),
+            backImageView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            backImageView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            backImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
             pageControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
